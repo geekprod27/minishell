@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:59:55 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/05/02 14:17:31 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/05/11 16:31:49 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,13 @@ void	parsing(char *cmd, t_env *enviro)
 		exitfree(enviro);
 	}
 	else if (ft_strncmp(cmd, "pwd", 3) == 0)
-	{
-		print = pwd();
-		if (print)
-		{
-			printf("%s", print);
-			free(print);
-		}
-	}
+		pwd();
 	else if (ft_strncmp(cmd, "env", 3) == 0)
-	{
-		print = envi(enviro);
-		if (print)
-		{
-			printf("%s", print);
-			free(print);
-		}
-	}
+		envi(enviro);
 	else if (ft_strncmp(cmd, "export", 6) == 0)
 	{
 		cmd = cmd + 7;
-		print = export(cmd, enviro);
-		if (print)
-		{
-			printf("%s", print);
-			free(print);
-		}
+		export(cmd, enviro);
 	}
 	else if (ft_strncmp(cmd, "unset", 5) == 0)
 	{
@@ -60,22 +41,12 @@ void	parsing(char *cmd, t_env *enviro)
 	else if (ft_strncmp(cmd, "cd", 2) == 0)
 	{
 		cmd = cmd + 2;
-		print = cd(cmd, enviro);
-		if (print)
-		{
-			printf("%s", print);
-			free(print);
-		}
+		cd(cmd, enviro);
 	}
-	else if (ft_strncmp(cmd, "echo", 4) == 0)
+	else if (ft_strncmp(cmd, "echo ", 5) == 0)
 	{
-		cmd = cmd + 4;
-		print = echo(cmd, enviro, 0);
-		if (print)
-		{
-			printf("%s", print);
-			free(print);
-		}
+		cmd = cmd + 5;
+		echo(cmd, enviro, 0);
 	}
 	else if (ft_strncmp(cmd, "./", 2) == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:22:10 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/04/28 15:17:29 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/05/11 16:45:42 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@ char	*getname(char *cmd, int i)
 	return (name);
 }
 
-char	*echo(char	*cmd, t_env *enviro, int tiretn)
+int	echo(char	*cmd, t_env *enviro, int tiretn)
 {
 	char	*d;
 	int		i;
 
 	i = 0;
 	d = ft_strdup("");
+	if (*cmd == ' ')
+		cmd++;
 	while (cmd[i])
 	{
 		if (cmd[i] != '$')
@@ -44,9 +46,12 @@ char	*echo(char	*cmd, t_env *enviro, int tiretn)
 		}
 		i++;
 	}
+	printf("%s", d);
+	free(d);
 	if (tiretn)
-		return (d);
-	return (ft_strjoinchar(d, '\n'));
+		return (0);
+	printf("\n");
+	return (0);
 }
 
 char	*getpath(char *cmd, t_env *enviro)

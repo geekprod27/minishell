@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 21:00:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/05/02 14:16:55 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/05/11 16:45:25 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,15 +124,15 @@ int		push_char(t_lexer *lexer, char **token_s);
 typedef struct s_env	t_env;
 void	parsing(char *cmd, t_env *enviro);
 void	ctrlc(int i);
-char	*pwd(void);
-char	*envi( t_env *enviro);
+int		pwd(void);
+int		envi( t_env *enviro);
 char	*ft_strjoinchar(char const *s1, char const s2);
 t_env	*initenv(char **env);
-char	*export(char *cmd, t_env *un);
+int		export(char *cmd, t_env *un);
 void	changedeb(t_env *un);
-void	unset(char *cmd, t_env *un);
-char	*cd(char	*cmd, t_env	*envi);
-char	*echo(char	*cmd, t_env *enviro, int tiretn);
+int		unset(char *cmd, t_env *un);
+int		cd(char	*cmd, t_env	*envi);
+int		echo(char	*cmd, t_env *enviro, int tiretn);
 char	*getvale(char *name, t_env *un);
 void	lexe(char *cmd, t_env *envi);
 void	exitfree(t_env *un);
@@ -147,8 +147,8 @@ void	coredump(int sig);
 void	childctrlc(int sig);
 void	freetab(char **tab);
 void	addele(t_env *un, char **retsplit);
-char	*exportun(t_env *un);
-char	*exportd(char *cmd, t_env *un);
+int		exportun(t_env *un);
+int		exportd(char *cmd, t_env *un);
 
 struct s_env
 {

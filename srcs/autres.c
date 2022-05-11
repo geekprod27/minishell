@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 17:57:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/04/28 15:17:49 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/05/11 16:21:16 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	addele(t_env *un, char **retsplit)
 	}
 }
 
-char	*exportun(t_env *un)
+int	exportun(t_env *un)
 {
 	char	*d;
 
@@ -60,20 +60,23 @@ char	*exportun(t_env *un)
 		d = ft_strjoinchar(d, '\n');
 		un = un->next;
 	}
-	return (d);
+	printf("%s", d);
+	free(d);
+	return (0);
 }
 
-char	*rname(char **retsplit)
+int	rname(char **retsplit)
 {
 	char	*d;
 
 	d = ft_strjoinchar(retsplit[0], '\n');
 	free(retsplit[1]);
 	free(retsplit);
-	return (ft_strjoin_free("export: not an identifier: ", d));
+	printf("minishell : export: not an identifier: %s", d);
+	return (1);
 }
 
-char	*exportd(char *cmd, t_env *un)
+int	exportd(char *cmd, t_env *un)
 {
 	char	**retsplit;
 
@@ -98,5 +101,5 @@ char	*exportd(char *cmd, t_env *un)
 		un->haveeq = 1;
 	else
 		un->haveeq = 0;
-	return (NULL);
+	return (0);
 }

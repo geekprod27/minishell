@@ -6,23 +6,24 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:27:51 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/04/28 14:13:58 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/05/11 16:44:57 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*pwd(void)
+int	pwd(void)
 {
 	char	*buf;
 
 	buf = ft_calloc(50, sizeof(char));
 	getcwd(buf, 50);
-	buf = ft_strjoinchar(buf, '\n');
-	return (buf);
+	printf("%s\n", buf);
+	free(buf);
+	return (0);
 }
 
-char	*envi(t_env *un)
+int	envi(t_env *un)
 {
 	char	*d;
 
@@ -40,20 +41,21 @@ char	*envi(t_env *un)
 		}
 		un = un->next;
 	}
-	return (d);
+	printf("%s", d);
+	return (0);
 }
 
-char	*export(char *cmd, t_env *un)
+int	export(char *cmd, t_env *un)
 {
 	un = un->deb;
 	if (*cmd)
 		return (exportd(cmd, un));
 	else
 		return (exportun(un));
-	return (NULL);
+	return (0);
 }
 
-void	unset(char *cmd, t_env *un)
+int	unset(char *cmd, t_env *un)
 {
 	t_env	*prev;
 
@@ -77,33 +79,32 @@ void	unset(char *cmd, t_env *un)
 		prev = un;
 		un = un->next;
 	}
+	return (0);
 }
 
-char	*cd(char	*cmd, t_env	*envi)
+int	cd(char	*cmd, t_env	*envi)
 {
 	char	**retsplit;
-	int		i;
 
+	int (i) = -1;
 	if (!*cmd)
-	{
 		cmd = getvale("HOME", envi);
-	}
 	else
 		cmd++;
-	i = 0;
 	retsplit = ft_split(cmd, ' ');
 	if (retsplit[1])
 	{
 		freetab(retsplit);
-		return (ft_strdup("minishell: cd: too many arguments\n"));
+		printf("minishell: cd: too many arguments\n");
+		return (1);
 	}
-	while (retsplit[i])
-	{
+	while (retsplit[i++])
 		free(retsplit[i]);
-		i++;
-	}
 	free(retsplit);
 	if (chdir(cmd))
-		return (ft_strjoin(cmd, ": No such file or directory\n"));
+	{
+		printf("%s: No such file or directory\n", cmd);
+		return (1);
+	}
 	return (0);
 }
