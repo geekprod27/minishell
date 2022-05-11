@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:22:10 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/05/11 16:45:42 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/05/11 17:13:04 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	echo(char	*cmd, t_env *enviro, int tiretn)
 			d = ft_strjoinchar(d, cmd[i]);
 		else
 		{
-			d = ft_strjoin_free2(d, getvale(getname(cmd, i), enviro));
+			d = ft_strjoin_free2(d, getvale(getname(++cmd, i), enviro));
 			while (cmd[i] != ' ' && cmd[i])
 				i++;
 		}
