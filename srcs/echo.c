@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:22:10 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/05/11 17:13:04 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/05/12 12:29:15 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	echo(char	*cmd, t_env *enviro, int tiretn)
 {
 	char	*d;
 	int		i;
+	char	*name;
+	char	*val;
 
 	i = 0;
 	d = ft_strdup("");
@@ -40,11 +42,19 @@ int	echo(char	*cmd, t_env *enviro, int tiretn)
 			d = ft_strjoinchar(d, cmd[i]);
 		else
 		{
-			d = ft_strjoin_free2(d, getvale(getname(++cmd, i), enviro));
+			name = getname(++cmd, i);
+			val = getvale(name, enviro);
+			free(name);
+			if (val)
+			{
+				d = ft_strjoin_free2(d, val);
+				free(val);
+			}
 			while (cmd[i] != ' ' && cmd[i])
 				i++;
 		}
-		i++;
+		if (cmd[i])
+			i++;
 	}
 	printf("%s", d);
 	free(d);

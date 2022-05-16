@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:59:46 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/04/28 14:15:43 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/05/12 12:18:17 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*getvale(char *name, t_env *un)
 			return (un->value);
 		un = un->next;
 	}
-	return (0);
+	return (NULL);
 }
 
 void	changedeb(t_env *un)
