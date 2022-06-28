@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:59:55 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/05/11 16:31:49 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/06/21 14:13:40 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,18 @@
 
 void	parsing(char *cmd, t_env *enviro)
 {
-	char	*print;
+	char	**retsplit;
 
-	print = NULL;
 	if (cmd == NULL)
 		exitfree(enviro);
-	else if (ft_strncmp(cmd, "exit", 4) == 0)
+	retsplit = ft_split(cmd, '|');
+	if (retsplit[1])
+	{
+		piped(retsplit, enviro);
+		return ;
+	}
+	freetab(retsplit);
+	if (ft_strncmp(cmd, "exit", 4) == 0)
 	{
 		free(cmd);
 		exitfree(enviro);
@@ -55,6 +61,7 @@ void	parsing(char *cmd, t_env *enviro)
 	}
 	else
 		lexe(cmd, enviro);
+	free(cmd);
 }
 
 void	ctrlc(int i)
@@ -83,7 +90,6 @@ int	main(int ac, char **av, char **env)
 		if (cmd && ft_strlen(cmd) > 0)
 			add_history(cmd);
 		parsing(cmd, enviro);
-		free(cmd);
 	}
 	return (0);
 }

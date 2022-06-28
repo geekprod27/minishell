@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 21:00:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/05/11 16:45:25 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/06/22 13:30:29 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <signal.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/uio.h>
 # include <unistd.h>
 
 # define MAX_TOKENS 12
@@ -54,6 +55,16 @@ typedef struct s_regex
 	size_t		len;
 	t_ttype		type;
 }				t_regex;
+
+typedef struct s_pipe	t_pipe;
+struct s_pipe
+{
+	t_pipe	*prev;
+	int		in;
+	int		out;
+	int		pid;
+	t_pipe	*next;
+};
 
 typedef struct s_token
 {
@@ -149,6 +160,7 @@ void	freetab(char **tab);
 void	addele(t_env *un, char **retsplit);
 int		exportun(t_env *un);
 int		exportd(char *cmd, t_env *un);
+void	piped(char **retsplit, t_env *enviro);
 
 struct s_env
 {

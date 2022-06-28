@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:16:13 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/04/28 15:09:00 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:16:22 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	chldexed(char *cmd, t_env *envi)
 	freeenv(envi);
 	argv[0] = path;
 	if (execve(path, argv, env) == -1)
-		printf("minishell: %s: No such file or directory\n", "p");
+		printf("minishell: %s: No such file or directory\n", argv[0]);
 	freetab(argv);
 	freetab(env);
 	exit(6);
