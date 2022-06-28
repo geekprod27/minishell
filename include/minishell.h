@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 21:00:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/06/22 13:30:29 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/06/28 12:00:22 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/uio.h>
+# include <fcntl.h>
 # include <unistd.h>
 
 # define MAX_TOKENS 12

@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 14:20:42 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/06/23 12:28:58 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/06/28 12:00:11 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,4 +123,13 @@ void	piped(char **retsplit, t_env *enviro)
 		pl = pl->prev;
 	freeplc(pl);
 	freetab(retsplit);
+}
+
+void infile(char *path)
+{
+	int	fd;
+
+	fd = open(path, O_RDONLY);
+	dup2(fd, STDIN_FILENO);
+	close(fd);
 }
