@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 14:20:42 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/06/28 12:00:11 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/06/29 14:49:53 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,25 @@ void infile(char *path)
 	int	fd;
 
 	fd = open(path, O_RDONLY);
+	if (fd <= 0)
+	{
+		ft_putstr_fd("Open error\n", STDERR_FILENO);
+		return ;
+	}
 	dup2(fd, STDIN_FILENO);
+	close(fd);
+}
+
+void outfile(char *path)
+{
+	int	fd;
+
+	fd = open(path, O_CREAT);
+	if (fd <= 0)
+	{
+		ft_putstr_fd("Open error\n", STDERR_FILENO);
+		return ;
+	}
+	dup2(fd, STDOUT_FILENO);
 	close(fd);
 }
