@@ -6,21 +6,11 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 14:20:42 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/06/29 14:49:53 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/07/07 11:40:56 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	tablen(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-		i++;
-	return (i);
-}
 
 void	freeplc(t_pipe *pl)
 {
@@ -36,10 +26,26 @@ void	freeplc(t_pipe *pl)
 	}
 }
 
+int	ipipe(int ltab, t_pipe *p)
+{
+	int	piper[2];
+
+	if (pipe(piper) == -1)
+		return (1);
+	p->in = piper[1];
+	p->out = piper[0];
+	if (ltab > 1)
+	{
+		p->next = malloc(sizeof(t_pipe));
+		p->next->prev = p;
+		ltab = ltab - 1;
+	}
+	return (0);
+}
+
 t_pipe	*initpipe(char	**tab)
 {
 	int		ltab;
-	int		piper[2];
 	t_pipe	*p;
 	t_pipe	*deb;
 
@@ -51,16 +57,10 @@ t_pipe	*initpipe(char	**tab)
 		return (NULL);
 	while (ltab > 0 && p)
 	{
-		if (pipe(piper) == -1)
+		if (ipipe(ltab, p))
 			return (NULL);
-		p->in = piper[1];
-		p->out = piper[0];
 		if (ltab > 1)
-		{
-			p->next = malloc(sizeof(t_pipe));
-			p->next->prev = p;
 			ltab = ltab - 1;
-		}
 		else
 			p->next = NULL;
 		p = p->next;
@@ -91,26 +91,11 @@ void	piped(char **retsplit, t_env *enviro)
 	int		i;
 	t_pipe	*pl;
 	t_pipe	*pld;
-	char	*tmp;
 
 	i = 0;
 	pl = initpipe(retsplit);
 	pld = pl;
-	while (retsplit[i])
-	{
-		if (retsplit[i][0] == ' ')
-		{
-			tmp = retsplit[i];
-			retsplit[i] = ft_strtrim(tmp, " ");
-			free(tmp);
-		}
-		pl->pid = fork();
-		if (pl->pid == 0)
-			childpipe(i, pl, retsplit, enviro);
-		i++;
-		if (pl->next)
-			pl = pl->next;
-	}
+	pipe2(retsplit, enviro, pl);
 	while (pld)
 	{
 		waitpid(pld->pid, 0, 0);
@@ -123,32 +108,4 @@ void	piped(char **retsplit, t_env *enviro)
 		pl = pl->prev;
 	freeplc(pl);
 	freetab(retsplit);
-}
-
-void infile(char *path)
-{
-	int	fd;
-
-	fd = open(path, O_RDONLY);
-	if (fd <= 0)
-	{
-		ft_putstr_fd("Open error\n", STDERR_FILENO);
-		return ;
-	}
-	dup2(fd, STDIN_FILENO);
-	close(fd);
-}
-
-void outfile(char *path)
-{
-	int	fd;
-
-	fd = open(path, O_CREAT);
-	if (fd <= 0)
-	{
-		ft_putstr_fd("Open error\n", STDERR_FILENO);
-		return ;
-	}
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
 }
