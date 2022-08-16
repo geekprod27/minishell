@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:59:46 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/05/12 12:18:17 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/16 16:06:37 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,34 @@ int	checkname(char *name)
 		i++;
 	}
 	return (1);
+}
+
+int	getnbpipe([la struct du parsing])
+{
+	int	i;
+
+	i = 0;
+	while (type == PIPE)
+	{
+		i++;
+		//struc next
+	}
+	return (i);
+}
+
+char **createtabpipe([la struct du parsing])
+{
+	char 	**ret;
+	int		i;
+
+	i = 0;
+	ret = malloc(sizeof(char *) * (getnbpipe(la struc) + 1));
+	while (type == PIPE)
+	{
+		ret[i] = cmd + arg;
+		i++;
+		//struc next
+	}
+	ret[i] = NULL;
+	return (ret)
 }
