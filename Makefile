@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+         #
+#    By: shocquen <shocquen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/31 22:41:32 by nfelsemb          #+#    #+#              #
-#    Updated: 2022/07/05 12:03:14 by nfelsemb         ###   ########.fr        #
+#    Updated: 2022/08/20 17:00:50 by shocquen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,15 +15,18 @@ INCLUDE = ./include/
 LIBFT	= ./libft/libft.a
 CFLAGS	+= -Wall -Werror -Wextra -g3
 
-FILES	= main.c pwd.c util.c echo.c exitfree.c norm.c autres.c fi.c pipe.c pipe2.c
+FILES	= main.c pwd.c util.c echo.c exitfree.c norm.c autres.c fi.c
+FILES_PARS = quote_checker.c tokens_split.c
 
 SRCS	= $(addprefix ./srcs/, $(FILES))
 OBJS	= $(addprefix ./objs/, $(FILES:.c=.o))
+SRCS_PARS	= $(addprefix ./srcs/parsing/, $(FILES_PARS))
+OBJS_PARS	= $(addprefix ./objs/parsing/, $(FILES_PARS:.c=.o))
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(OBJS) $(LIBFT) $(CFLAGS) -o $@ -lreadline
+$(NAME): $(LIBFT) $(OBJS) $(OBJS_PARS)
+	$(CC) $(OBJS) $(OBJS_PARS) $(LIBFT) $(CFLAGS) -o $@ -lreadline
 
 objs/%.o: srcs/%.c
 	mkdir -p ./objs/

@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 21:00:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/19 12:05:10 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/22 18:09:04 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,41 @@
 # include <sys/uio.h>
 # include <fcntl.h>
 # include <unistd.h>
+# include <stdbool.h>
 
 # define MAX_TOKENS 12
 
-typedef enum e_ttype
+/* parsing */
+int			quote_checker(char *str);
+t_list	*tokens_split(char *str);
+
+typedef	enum	e_type
+{
+	STR,
+	TYPE,
+	OUT_FILE,
+	OUT_FILE_APPEND,
+	IN_FILE,
+	IN_HEREDOC
+} t_type;
+
+typedef	struct	s_token
+{
+	char	*value;
+	t_type		type;
+} t_token;
+
+typedef	struct	s_cmd
+{
+	char *name;
+	char **args;
+	int		fd_in;
+	int		fd_out;
+} t_cmd;
+
+/* end parsing */
+
+/* typedef enum e_ttype
 {
 	TOKEN_NOT_VALID = 0,
 	TOKEN_PASS,
@@ -55,7 +86,7 @@ typedef struct s_regex
 	const char	*op;
 	size_t		len;
 	t_ttype		type;
-}				t_regex;
+}				t_regex;*/
 
 typedef struct s_pipe	t_pipe;
 struct s_pipe
@@ -67,7 +98,7 @@ struct s_pipe
 	t_pipe	*next;
 };
 
-typedef struct s_token
+/*typedef struct s_token
 {
 	char	*str;
 	size_t	len;
@@ -111,27 +142,27 @@ typedef struct s_ctrl
 	t_lexer	*lexer;
 	t_ast	*ast;
 	t_cmd	*cmd;
-}				t_ctrl;
+}				t_ctrl; */
 
 /*Functions for lexer*/
 
-void	create_lexer(t_lexer *lexer, size_t cap);
+/* void	create_lexer(t_lexer *lexer, size_t cap);
 t_lexer	*malloc_lexer(size_t cap);
 int		lexer_full(t_lexer *lexer);
 int		pass(t_lexer *lexer, t_ttype needed);
 void	add_token_to_lexer(t_lexer *lexer, const char *s, size_t len,
 			t_ttype type);
 void	add_word_to_lexer(t_lexer *lexer, char **token_s);
-void	double_lexer(t_lexer *lexer);
+void	double_lexer(t_lexer *lexer); */
 
 /*Functions for tokens*/
 
-t_token	create_token(const char *str, size_t len, t_ttype type);
+/* t_token	create_token(const char *str, size_t len, t_ttype type);
 t_token	*malloc_token(const char *s, size_t len, t_ttype type);
 int		tokenize(t_lexer *lexer);
 t_regex	get_token(char *input);
 void	get_next_token(t_lexer *lexer);
-int		push_char(t_lexer *lexer, char **token_s);
+int		push_char(t_lexer *lexer, char **token_s); */
 
 typedef struct s_env	t_env;
 void	parsing(char *cmd, t_env *enviro);

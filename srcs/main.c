@@ -6,26 +6,35 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:59:55 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/19 12:08:40 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/22 18:08:01 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void parser(char *input, t_env *enviro)
+{
+	t_list	*tokens;
+	(void)enviro;
+	if (quote_checker(input) == -1)
+		fprintf(stderr, "QUOTE_ERROR\n");
+	tokens = tokens_split(input);
+	while ((tokens)->content)
+	{
+		printf("token: |%s|\n", ((t_token *)(tokens)->content)->value);
+		tokens = (tokens)->next;
+	}
+}
+
 void	parsing(char *cmd, t_env *enviro)
 {
-	char	**retsplit;
+	// char	*print;
 
-	if (cmd == NULL)
+	// print = NULL;
+	parser(cmd, enviro);
+	/* if (cmd == NULL)
 		exitfree(enviro);
-	retsplit = ft_split(cmd, '|');
-	if (retsplit[1])
-	{
-		piped(retsplit, enviro);
-		return ;
-	}
-	freetab(retsplit);
-	if (ft_strncmp(cmd, "exit", 4) == 0)
+	else if (ft_strncmp(cmd, "exit", 4) == 0)
 	{
 		free(cmd);
 		exitfree(enviro);
@@ -60,8 +69,7 @@ void	parsing(char *cmd, t_env *enviro)
 		exed(cmd, enviro);
 	}
 	else
-		lexe(cmd, enviro);
-	free(cmd);
+		lexe(cmd, enviro); */
 }
 
 void	ctrlc(int i)
@@ -76,7 +84,7 @@ void	ctrlc(int i)
 
 int	main(int ac, char **av, char **env)
 {
-	// char	*cmd;
+	char	*cmd;
 	t_env	*enviro;
 
 	(void) ac;
@@ -86,13 +94,11 @@ int	main(int ac, char **av, char **env)
 	{
 		signal(SIGINT, ctrlc);
 		signal(SIGQUIT, SIG_IGN);
-		// cmd = readline("minishell% ");
-		// if (cmd && ft_strlen(cmd) > 0)
-		// 	add_history(cmd);
-		// parsing(cmd, enviro);
-		heredoc("deli");
-		//parsing("cat /tmp/heredoc", enviro);
-		break ;
+		cmd = readline("minishell% ");
+		if (cmd && ft_strlen(cmd) > 0)
+			add_history(cmd);
+		parsing(cmd, enviro);
+		free(cmd);
 	}
 	return (0);
 }
