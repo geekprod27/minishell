@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:59:46 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/16 16:06:37 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/19 12:22:38 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,32 +105,62 @@ int	checkname(char *name)
 	return (1);
 }
 
-int	getnbpipe([la struct du parsing])
+// int	getnbpipe([la struct du parsing])
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (type == PIPE)
+// 	{
+// 		i++;
+// 		//struc next
+// 	}
+// 	return (i);
+// }
+
+// char **createtabpipe([la struct du parsing])
+// {
+// 	char 	**ret;
+// 	int		i;
+
+// 	i = 0;
+// 	ret = malloc(sizeof(char *) * (getnbpipe(la struc) + 1));
+// 	while (type == PIPE)
+// 	{
+// 		ret[i] = cmd + arg;
+// 		i++;
+// 		//struc next
+// 	}
+// 	ret[i] = NULL;
+// 	return (ret);
+// }
+
+void	heredoc(char *deli)
 {
-	int	i;
+	char	*tmp;
+	int		fd;
 
-	i = 0;
-	while (type == PIPE)
+	fd = open("/tmp/heredoc", O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
+	if (fd <= 0)
+		return ;
+	tmp = readline(">");
+	while (tmp != NULL)
 	{
-		i++;
-		//struc next
+		if (ft_strncmp(deli, tmp, ft_strlen(deli) + 1) != 0)
+		{
+			write(fd, tmp, ft_strlen(tmp));
+			write(fd, "\n", 1);
+		}
+		else
+			break ;
+		tmp = readline(">");
 	}
-	return (i);
-}
-
-char **createtabpipe([la struct du parsing])
-{
-	char 	**ret;
-	int		i;
-
-	i = 0;
-	ret = malloc(sizeof(char *) * (getnbpipe(la struc) + 1));
-	while (type == PIPE)
+	if (tmp == NULL)
 	{
-		ret[i] = cmd + arg;
-		i++;
-		//struc next
+		ft_putstr_fd("bash: warning: here-document delimited by end-of-file,", 2);
+		ft_putstr_fd(" (wanted `", 2);
+		ft_putstr_fd(deli, 2);
+		ft_putstr_fd("')", 2);
 	}
-	ret[i] = NULL;
-	return (ret)
+	close (fd);
 }

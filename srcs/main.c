@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:59:55 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/06/21 14:13:40 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/19 12:08:40 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ctrlc(int i)
 
 int	main(int ac, char **av, char **env)
 {
-	char	*cmd;
+	// char	*cmd;
 	t_env	*enviro;
 
 	(void) ac;
@@ -86,10 +86,13 @@ int	main(int ac, char **av, char **env)
 	{
 		signal(SIGINT, ctrlc);
 		signal(SIGQUIT, SIG_IGN);
-		cmd = readline("minishell% ");
-		if (cmd && ft_strlen(cmd) > 0)
-			add_history(cmd);
-		parsing(cmd, enviro);
+		// cmd = readline("minishell% ");
+		// if (cmd && ft_strlen(cmd) > 0)
+		// 	add_history(cmd);
+		// parsing(cmd, enviro);
+		heredoc("deli");
+		//parsing("cat /tmp/heredoc", enviro);
+		break ;
 	}
 	return (0);
 }

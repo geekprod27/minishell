@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 21:00:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/07/05 12:03:43 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/19 12:05:10 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,8 @@ int		exportd(char *cmd, t_env *un);
 void	piped(char **retsplit, t_env *enviro);
 void	pipe2(char **retsplit, t_env *enviro, t_pipe *pl);
 void	childpipe(int i, t_pipe *pl, char **retsplit, t_env *enviro);
+int		tablen(char **tab);
+void	heredoc(char *deli);
 
 struct s_env
 {
