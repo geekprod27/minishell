@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shocquen <shocquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 21:00:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/22 18:09:04 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/22 18:19:16 by shocquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,37 +56,6 @@ typedef	struct	s_cmd
 } t_cmd;
 
 /* end parsing */
-
-/* typedef enum e_ttype
-{
-	TOKEN_NOT_VALID = 0,
-	TOKEN_PASS,
-	TOKEN_PIPE,
-	TOKEN_LESS,
-	TOKEN_GREAT,
-	TOKEN_DGREAT,
-	TOKEN_DLESS,
-	TOKEN_NEWLINE,
-	TOKEN_WORD,
-}				t_ttype;
-
-typedef enum e_node
-{
-	NODE_PROGRAM = 0,
-	NODE_CMD,
-	NODE_CMD_SUFFIX,
-	NODE_IO_FILE,
-	NODE_PIPE_SEQ,
-	NODE_SIMPLE_CMD,
-	NODE_WORD,
-}				t_node;
-
-typedef struct s_regex
-{
-	const char	*op;
-	size_t		len;
-	t_ttype		type;
-}				t_regex;*/
 
 typedef struct s_pipe	t_pipe;
 struct s_pipe
