@@ -6,7 +6,7 @@
 /*   By: shocquen <shocquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 21:00:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/23 14:10:25 by shocquen         ###   ########.fr       */
+/*   Updated: 2022/08/23 16:04:18 by shocquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 int			quote_checker(char *str);
 t_list	*tokens_split(char *str);
 
+# define YELLOW "\033[0;33m"
+# define RESET "\033[0m"
 typedef	enum	e_type
 {
 	STR = 0,
