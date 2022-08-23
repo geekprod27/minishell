@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:59:55 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/22 18:08:01 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/23 16:27:53 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,50 +26,44 @@ void parser(char *input, t_env *enviro)
 	}
 }
 
-void	parsing(char *cmd, t_env *enviro)
+void	chose(t_env *enviro, t_cmd *cmd)
 {
-	// char	*print;
-
-	// print = NULL;
-	parser(cmd, enviro);
-	/* if (cmd == NULL)
-		exitfree(enviro);
-	else if (ft_strncmp(cmd, "exit", 4) == 0)
+	if (ft_strncmp(cmd->name, "exit", 4) == 0)
 	{
 		free(cmd);
 		exitfree(enviro);
 	}
-	else if (ft_strncmp(cmd, "pwd", 3) == 0)
+	else if (ft_strncmp(cmd->name, "pwd", 3) == 0)
 		pwd();
 	else if (ft_strncmp(cmd, "env", 3) == 0)
 		envi(enviro);
-	else if (ft_strncmp(cmd, "export", 6) == 0)
+	else if (ft_strncmp(cmd>name, "export", 6) == 0)
 	{
 		cmd = cmd + 7;
 		export(cmd, enviro);
 	}
-	else if (ft_strncmp(cmd, "unset", 5) == 0)
+	else if (ft_strncmp(cmd>name, "unset", 5) == 0)
 	{
 		cmd = cmd + 6;
 		unset(cmd, enviro);
 	}
-	else if (ft_strncmp(cmd, "cd", 2) == 0)
+	else if (ft_strncmp(cmd>name, "cd", 2) == 0)
 	{
 		cmd = cmd + 2;
 		cd(cmd, enviro);
 	}
-	else if (ft_strncmp(cmd, "echo ", 5) == 0)
+	else if (ft_strncmp(cmd>name, "echo ", 5) == 0)
 	{
 		cmd = cmd + 5;
 		echo(cmd, enviro, 0);
 	}
-	else if (ft_strncmp(cmd, "./", 2) == 0)
+	else if (ft_strncmp(cmd>name, "./", 2) == 0)
 	{
 		cmd = cmd + 1;
 		exed(cmd, enviro);
 	}
 	else
-		lexe(cmd, enviro); */
+		lexe(cmd, enviro);
 }
 
 void	ctrlc(int i)
