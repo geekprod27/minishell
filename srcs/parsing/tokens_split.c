@@ -1,9 +1,18 @@
 #include "minishell.h"
 
 
-static int	is_whitesp(char c)
+static inline int	is_whitesp(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n');
+}
+
+static inline int	is_spe(char *str)
+{
+	if ((*str == '>' || *str == '<') && *(str + 1) && *(str + 1) == *str)
+		return ((int)*str + 1);
+	if (*str == '|' || *str == '>' || *str == '<')
+		return ((int)*str);
+	return (0);
 }
 
 static void *strtrim(char **str)
@@ -13,17 +22,17 @@ static void *strtrim(char **str)
 
 	ptr = *str;
 	i = 0;
-	while (**str == ' ')
+	while (is_whitesp(**str))
 		++*str;
 	while ((*str)[i])
 		++i;
-	while ((*str)[--i] == ' ')
+	while (is_whitesp((*str)[--i]))
 		;
 	*(*str + i + 1) = 0;
 	return (ptr);
 }
 
-t_token *mktok(char *value, size_t len)
+t_token *mktok(char *value, size_t len, t_type type)
 {
 	t_token	*ret;
 
@@ -31,7 +40,7 @@ t_token *mktok(char *value, size_t len)
 	if (!ret)
 		return (NULL);
 	ret->value = ft_strndup(value, len);
-	ret->type = STR;
+	ret->type = type;
 	value = value + len;
 	return (ret);
 }
@@ -40,6 +49,7 @@ t_list *tokens_split(char *str)
 {
 	t_list	*ret;
 	char		*start;
+	t_type		type;
 
 	ret = NULL;
 	strtrim(&str);
@@ -47,6 +57,7 @@ t_list *tokens_split(char *str)
 		return (NULL);
 	while (*str)
 	{
+		
 		start = str;
 		if (*str == '\'' || *str == '"')
 		{
@@ -54,14 +65,17 @@ t_list *tokens_split(char *str)
 		}
 		else if (!is_whitesp(*str))
 		{
-			while (*str && !is_whitesp(*str))
+			while (*str && !is_whitesp(*str) && !is_spe(str))
 				++str;
-			if (is_whitesp(*str))
+			if (is_whitesp(*str) || is_spe(str))
+			{
+				type = (int)is_spe(str);
 				*str = 0;
+			}
 		}
 		if (!*start)
 			break ;
-		ft_lstadd_back(&ret, ft_lstnew(mktok(start, ++str - (start - 1))));
+		ft_lstadd_back(&ret, ft_lstnew(mktok(start, ++str - (start - 1), type)));
 	}
 	return (ret);
 }
