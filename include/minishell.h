@@ -6,7 +6,7 @@
 /*   By: shocquen <shocquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 21:00:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/23 13:59:29 by shocquen         ###   ########.fr       */
+/*   Updated: 2022/08/23 14:10:25 by shocquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef	enum	e_type
 	OUT_FILE = '>',
 	OUT_FILE_APPEND = '>' + 1,
 	IN_FILE = '<',
-	IN_HEREDOC = '<' + 1;
+	IN_HEREDOC = '<' + 1
 } t_type;
 
 typedef	struct	s_token
