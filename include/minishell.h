@@ -6,9 +6,10 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 21:00:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/23 16:24:02 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/23 16:30:06 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -31,14 +32,16 @@
 int		quote_checker(char *str);
 t_list	*tokens_split(char *str);
 
+# define YELLOW "\033[0;33m"
+# define RESET "\033[0m"
 typedef	enum	e_type
 {
-	STR,
-	TYPE,
-	OUT_FILE,
-	OUT_FILE_APPEND,
-	IN_FILE,
-	IN_HEREDOC
+	STR = 0,
+	PIPE = '|',
+	OUT_FILE = '>',
+	OUT_FILE_APPEND = '>' + 1,
+	IN_FILE = '<',
+	IN_HEREDOC = '<' + 1
 } t_type;
 
 typedef	struct	s_token
