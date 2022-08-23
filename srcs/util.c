@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:59:46 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/19 12:22:38 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/23 14:45:55 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,14 +135,14 @@ int	checkname(char *name)
 // 	return (ret);
 // }
 
-void	heredoc(char *deli)
+char	*heredoc(char *deli)
 {
 	char	*tmp;
 	int		fd;
 
 	fd = open("/tmp/heredoc", O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
 	if (fd <= 0)
-		return ;
+		return (NULL);
 	tmp = readline(">");
 	while (tmp != NULL)
 	{
@@ -163,4 +163,5 @@ void	heredoc(char *deli)
 		ft_putstr_fd("')", 2);
 	}
 	close (fd);
+	return ("/tmp/heredoc");
 }
