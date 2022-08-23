@@ -40,28 +40,28 @@ t_list *tokens_split(char *str)
 {
 	t_list	*ret;
 	char		*start;
-	int			i;
 
 	ret = NULL;
 	strtrim(&str);
-	if ((is_whitesp(*str)))
+	if (is_whitesp(*str))
 		return (NULL);
-	i = -1;
-	while (str[++i])
+	while (*str)
 	{
 		start = str;
-		if (str[i] == '\'' || str[i] == '"')
+		if (*str == '\'' || *str == '"')
 		{
-			str = ft_strchr(start + i + 1, str[i]);
+			str = ft_strchr(str + 1, *str);
 		}
-		else if (!is_whitesp(str[i]))
+		else if (!is_whitesp(*str))
 		{
 			while (*str && !is_whitesp(*str))
 				++str;
 			if (is_whitesp(*str))
 				*str = 0;
 		}
-		ft_lstadd_back(&ret, ft_lstnew(mktok(start, ++str - (start + i))));
+		if (!*start)
+			break ;
+		ft_lstadd_back(&ret, ft_lstnew(mktok(start, ++str - (start - 1))));
 	}
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: shocquen <shocquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 21:00:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/22 18:19:16 by shocquen         ###   ########.fr       */
+/*   Updated: 2022/08/23 13:59:29 by shocquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ t_list	*tokens_split(char *str);
 
 typedef	enum	e_type
 {
-	STR,
-	TYPE,
-	OUT_FILE,
-	OUT_FILE_APPEND,
-	IN_FILE,
-	IN_HEREDOC
+	STR = 0,
+	PIPE = '|',
+	OUT_FILE = '>',
+	OUT_FILE_APPEND = '>' + 1,
+	IN_FILE = '<',
+	IN_HEREDOC = '<' + 1;
 } t_type;
 
 typedef	struct	s_token
