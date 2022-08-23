@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shocquen <shocquen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 21:00:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/22 18:19:16 by shocquen         ###   ########.fr       */
+/*   Updated: 2022/08/23 14:54:55 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define MAX_TOKENS 12
 
 /* parsing */
-int			quote_checker(char *str);
+int		quote_checker(char *str);
 t_list	*tokens_split(char *str);
 
 typedef	enum	e_type
@@ -46,14 +46,6 @@ typedef	struct	s_token
 	char	*value;
 	t_type		type;
 } t_token;
-
-typedef	struct	s_cmd
-{
-	char *name;
-	char **args;
-	int		fd_in;
-	int		fd_out;
-} t_cmd;
 
 /* end parsing */
 
@@ -165,7 +157,10 @@ void	piped(char **retsplit, t_env *enviro);
 void	pipe2(char **retsplit, t_env *enviro, t_pipe *pl);
 void	childpipe(int i, t_pipe *pl, char **retsplit, t_env *enviro);
 int		tablen(char **tab);
-void	heredoc(char *deli);
+char	*heredoc(char *deli);
+void	infile(char *path);
+void	outfile(char *path);
+void	outfileapp(char *path);
 
 struct s_env
 {
