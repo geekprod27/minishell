@@ -6,15 +6,30 @@
 /*   By: shocquen <shocquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 16:29:25 by shocquen          #+#    #+#             */
-/*   Updated: 2022/08/26 01:34:00 by shocquen         ###   ########.fr       */
+/*   Updated: 2022/08/26 01:46:38 by shocquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief generate a list of token from a string
+ * 
+ * @param str 
+ * @return t_list* 
+ */
+t_list *build_tokens(char *restrict str);
+/**
+ * @brief The strtok() function is used to isolate sequential tokens in a null-terminated string, str.
+ * 
+ * @param value 
+ * @param type 
+ * @return t_token* 
+ */
+t_token *newtok(char *value, t_type type);
+
 // static inline int	is_whitesp(char c);
 // static inline int	is_spe(char *str);
-t_token *newtok(char *value, t_type type);
 
 t_list *build_tokens(char *restrict str)
 {
@@ -34,6 +49,18 @@ t_list *build_tokens(char *restrict str)
 	return (tokens);
 }
 
+t_token *newtok(char *value, t_type type)
+{
+	t_token	*ret;
+
+	ret = ft_calloc(sizeof(*ret), 1);
+	if (!ret)
+		return (NULL);
+	ret->value = ft_strdup(value);
+	ret->type = type;
+	return (ret);
+}
+
 // static inline int	is_whitesp(char c)
 // {
 // 	return (c == ' ' || c == '\t' || c == '\n');
@@ -47,32 +74,3 @@ t_list *build_tokens(char *restrict str)
 // 		return ((int)*str);
 // 	return (0);
 // }
-
-t_token *newtok(char *value, t_type type)
-{
-	t_token	*ret;
-
-	ret = ft_calloc(sizeof(*ret), 1);
-	if (!ret)
-		return (NULL);
-	ret->value = ft_strdup(value);
-	ret->type = type;
-	return (ret);
-}
-
-/* static void *strtrim(char **str)
-{
-	void	*ptr;
-	int		i;
-
-	ptr = *str;
-	i = 0;
-	while (is_whitesp(**str))
-		++*str;
-	while ((*str)[i])
-		++i;
-	while (is_whitesp((*str)[--i]))
-		;
-	*(*str + i + 1) = 0;
-	return (ptr);
-} */
