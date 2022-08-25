@@ -6,7 +6,7 @@
 /*   By: shocquen <shocquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 21:00:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/23 16:27:02 by shocquen         ###   ########.fr       */
+/*   Updated: 2022/08/26 00:46:44 by shocquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@
 
 /* parsing */
 int		quote_checker(char *str);
-t_list	*tokens_split(char *str);
+t_list *build_tokens(char *restrict str);
+size_t    sk_strcspn(char *str, char *span);
+size_t    sk_strspn(char *str, char *span);
+char    *sk_strtok(char    *str, char *const sep);
 
 # define YELLOW "\033[0;33m"
 # define RESET "\033[0m"
