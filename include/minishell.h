@@ -6,7 +6,7 @@
 /*   By: shocquen <shocquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 21:00:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/26 00:46:44 by shocquen         ###   ########.fr       */
+/*   Updated: 2022/08/26 01:49:38 by shocquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,22 @@
 
 /* parsing */
 int		quote_checker(char *str);
+/**
+ * @brief generate a list of token from a string
+ * 
+ * @param str 
+ * @return t_list* 
+ */
 t_list *build_tokens(char *restrict str);
 size_t    sk_strcspn(char *str, char *span);
 size_t    sk_strspn(char *str, char *span);
+/**
+ * @brief The strtok() function is used to isolate sequential tokens in a null-terminated string, str.
+ * 
+ * @param value 
+ * @param type 
+ * @return t_token* 
+ */
 char    *sk_strtok(char    *str, char *const sep);
 
 # define YELLOW "\033[0;33m"
