@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:59:55 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/25 14:41:29 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/26 13:19:56 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void parser(char *input, t_env *enviro)
 	(void)enviro;
 	if (quote_checker(input) == -1)
 		fprintf(stderr, "QUOTE_ERROR\n");
-	tokens = tokens_split(input);
+	tokens = build_tokens(input);
 	while (tokens)
 	{
-		printf("token->value: |%s|\ntoken->type: %d\n",
+		printf("\ttoken->value: "YELLOW"%s"RESET"\n\ttoken->type: %d\n",
 			((t_token *)tokens->content)->value,
 			((t_token *)tokens->content)->type);
 		tokens = tokens->next;

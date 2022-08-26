@@ -6,9 +6,10 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 21:00:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/25 17:25:50 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/26 13:21:31 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 
 #ifndef MINISHELL_H
@@ -30,7 +31,23 @@
 
 /* parsing */
 int		quote_checker(char *str);
-t_list	*tokens_split(char *str);
+/**
+ * @brief generate a list of token from a string
+ * 
+ * @param str 
+ * @return t_list* 
+ */
+t_list *build_tokens(char *restrict str);
+size_t    sk_strcspn(char *str, char *span);
+size_t    sk_strspn(char *str, char *span);
+/**
+ * @brief The strtok() function is used to isolate sequential tokens in a null-terminated string, str.
+ * 
+ * @param value 
+ * @param type 
+ * @return t_token* 
+ */
+char    *sk_strtok(char    *str, char *const sep);
 
 # define YELLOW "\033[0;33m"
 # define RESET "\033[0m"
