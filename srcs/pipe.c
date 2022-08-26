@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 14:20:42 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/07/07 11:40:56 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/25 15:51:33 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ipipe(int ltab, t_pipe *p)
 	return (0);
 }
 
-t_pipe	*initpipe(char	**tab)
+t_pipe	*initpipe(t_cmd	**tab)
 {
 	int		ltab;
 	t_pipe	*p;
@@ -68,10 +68,8 @@ t_pipe	*initpipe(char	**tab)
 	return (deb);
 }
 
-void	childpipe(int i, t_pipe *pl, char **retsplit, t_env *enviro)
+void	childpipe(int i, t_pipe *pl, t_cmd **retsplit, t_env *enviro)
 {
-	char	*tmp;
-
 	if (i != 0)
 		dup2(pl->prev->out, STDIN_FILENO);
 	if (retsplit[i + 1])
@@ -79,20 +77,17 @@ void	childpipe(int i, t_pipe *pl, char **retsplit, t_env *enviro)
 	while (pl->prev)
 		pl = pl->prev;
 	freeplc(pl);
-	tmp = ft_strdup(retsplit[i]);
-	freetab(retsplit);
-	parsing(tmp, enviro);
+	//freetab(retsplit);
+	chose(enviro, retsplit[i]);
 	freeenv(enviro);
 	exit(1);
 }
 
-void	piped(char **retsplit, t_env *enviro)
+void	piped(t_cmd **retsplit, t_env *enviro)
 {
-	int		i;
 	t_pipe	*pl;
 	t_pipe	*pld;
 
-	i = 0;
 	pl = initpipe(retsplit);
 	pld = pl;
 	pipe2(retsplit, enviro, pl);
@@ -107,5 +102,5 @@ void	piped(char **retsplit, t_env *enviro)
 	while (pl->prev)
 		pl = pl->prev;
 	freeplc(pl);
-	freetab(retsplit);
+	//freetab(retsplit);
 }

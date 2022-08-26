@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:27:51 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/05/11 16:44:57 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/25 14:28:31 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,20 @@ int	envi(t_env *un)
 	return (0);
 }
 
-int	export(char *cmd, t_env *un)
+int	export(t_cmd *cmd, t_env *un)
 {
+	int	i;
+
+	i = 0;
 	un = un->deb;
-	if (*cmd)
-		return (exportd(cmd, un));
+	if (cmd->arg[0])
+	{
+		while (cmd->arg[i])
+		{
+			exportd(cmd->arg[i], un);
+			i++;
+		}
+	}
 	else
 		return (exportun(un));
 	return (0);
@@ -82,29 +91,24 @@ int	unset(char *cmd, t_env *un)
 	return (0);
 }
 
-int	cd(char	*cmd, t_env	*envi)
+int	cd(char	**cmd, t_env	*envi)
 {
-	char	**retsplit;
-
 	int (i) = -1;
 	if (!*cmd)
-		cmd = getvale("HOME", envi);
-	else
-		cmd++;
-	retsplit = ft_split(cmd, ' ');
-	if (retsplit[1])
+		cmd[0] = getvale("HOME", envi);
+	if (cmd[1])
 	{
-		freetab(retsplit);
+		freetab(cmd);
 		printf("minishell: cd: too many arguments\n");
 		return (1);
 	}
-	while (retsplit[i++])
-		free(retsplit[i]);
-	free(retsplit);
-	if (chdir(cmd))
+	if (chdir(cmd[0]))
 	{
-		printf("%s: No such file or directory\n", cmd);
+		printf("%s: No such file or directory\n", cmd[0]);
 		return (1);
 	}
+	while (cmd[i++])
+		free(cmd[i]);
+	free(cmd);
 	return (0);
 }

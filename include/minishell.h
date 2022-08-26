@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 21:00:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/23 16:30:06 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/25 17:25:50 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,26 +66,28 @@ typedef struct s_cmd
 {
 	char	*name;
 	char	**arg;
+	int		fd_in;
+	int		fd_out;
 }				t_cmd;
 
 typedef struct s_env	t_env;
-void	parsing(char *cmd, t_env *enviro);
+void	chose(t_env *enviro, t_cmd *cmd);
 void	ctrlc(int i);
 int		pwd(void);
 int		envi( t_env *enviro);
 char	*ft_strjoinchar(char const *s1, char const s2);
 t_env	*initenv(char **env);
-int		export(char *cmd, t_env *un);
+int		export(t_cmd *cmd, t_env *un);
 void	changedeb(t_env *un);
 int		unset(char *cmd, t_env *un);
-int		cd(char	*cmd, t_env	*envi);
-int		echo(char	*cmd, t_env *enviro, int tiretn);
+int		cd(char	**cmd, t_env	*envi);
+int		echo(char	**cmd);
 char	*getvale(char *name, t_env *un);
-void	lexe(char *cmd, t_env *envi);
+void	lexe(t_cmd *cmd, t_env *envi);
 void	exitfree(t_env *un);
 void	freeenv(t_env *un);
 int		checkname(char *name);
-void	exed(char *cmd, t_env *envi);
+void	exed(t_cmd *cmd, t_env *envi);
 char	**getenvchar(t_env *enviro);
 void	freetr(char	**pa, char *name, int i);
 char	*getna(char *cmd);
@@ -96,10 +98,10 @@ void	freetab(char **tab);
 void	addele(t_env *un, char **retsplit);
 int		exportun(t_env *un);
 int		exportd(char *cmd, t_env *un);
-void	piped(char **retsplit, t_env *enviro);
-void	pipe2(char **retsplit, t_env *enviro, t_pipe *pl);
-void	childpipe(int i, t_pipe *pl, char **retsplit, t_env *enviro);
-int		tablen(char **tab);
+void	piped(t_cmd **retsplit, t_env *enviro);
+void	pipe2(t_cmd **retsplit, t_env *enviro, t_pipe *pl);
+void	childpipe(int i, t_pipe *pl, t_cmd **retsplit, t_env *enviro);
+int		tablen(t_cmd **tab);
 char	*heredoc(char *deli);
 void	infile(char *path);
 void	outfile(char *path);

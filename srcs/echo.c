@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:22:10 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/05/31 14:57:42 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/25 14:31:37 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,38 +25,26 @@ char	*getname(char *cmd, int i)
 	return (name);
 }
 
-int	echo(char	*cmd, t_env *enviro, int tiretn)
+int	echo(char	**cmd)
 {
-	char	*d;
 	int		i;
-	char	*name;
-	char	*val;
+	int		tiretn;
 
 	i = 0;
-	d = ft_strdup("");
-	if (*cmd == ' ')
-		cmd++;
+	if (cmd[0][0] == '-' && cmd[0][1] == 'n')
+	{
+		tiretn = 1;
+		while (cmd[0][i] == 'n' && cmd[0][i])
+			i++;
+		if (cmd[0][i])
+			tiretn = 0;
+		i = tiretn;
+	}
 	while (cmd[i])
 	{
-		if (cmd[i] != '$')
-			d = ft_strjoinchar(d, cmd[i]);
-		else
-		{
-			name = getname(++cmd, i);
-			val = getvale(name, enviro);
-			free(name);
-			if (val)
-			{
-				d = ft_strjoin_free2(d, val);
-			}
-			while (cmd[i] != ' ' && cmd[i])
-				i++;
-		}
-		if (cmd[i])
-			i++;
+		printf("%s ", cmd[i]);
+		i++;
 	}
-	printf("%s", d);
-	free(d);
 	if (tiretn)
 		return (0);
 	printf("\n");
@@ -116,7 +104,7 @@ char	**getenvchar(t_env *enviro)
 	return (ret);
 }
 
-void	lexe(char *cmd, t_env *envi)
+void	lexe(t_cmd *cmd, t_env *envi)
 {
 	int		pid;
 	int		status;
@@ -129,14 +117,14 @@ void	lexe(char *cmd, t_env *envi)
 	pid = fork();
 	if (pid == 0)
 	{
-		path = getpath(cmd, envi);
-		argv = ft_split(cmd, ' ');
+		path = getpath(cmd->name, envi);
+		argv = cmd->arg;
 		free(argv[0]);
 		if (path)
 			argv[0] = path;
 		env = getenvchar(envi);
 		freeenv(envi);
-		child(path, argv, env, getna(cmd));
+		child(path, argv, env, cmd->name);
 		free(cmd);
 		exit(6);
 	}

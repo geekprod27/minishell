@@ -6,26 +6,19 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 11:36:39 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/07/07 11:41:02 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/25 17:40:55 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pipe2(char **retsplit, t_env *enviro, t_pipe *pl)
+void	pipe2(t_cmd **retsplit, t_env *enviro, t_pipe *pl)
 {
 	int		i;
-	char	*tmp;
 
 	i = 0;
 	while (retsplit[i])
 	{
-		if (retsplit[i][0] == ' ')
-		{
-			tmp = retsplit[i];
-			retsplit[i] = ft_strtrim(tmp, " ");
-			free(tmp);
-		}
 		pl->pid = fork();
 		if (pl->pid == 0)
 			childpipe(i, pl, retsplit, enviro);
@@ -35,7 +28,7 @@ void	pipe2(char **retsplit, t_env *enviro, t_pipe *pl)
 	}
 }
 
-void	infile(char *path)
+void	infile(char *path, t_cmd *cmd)
 {
 	int	fd;
 
@@ -45,11 +38,10 @@ void	infile(char *path)
 		ft_putstr_fd("Open error\n", STDERR_FILENO);
 		return ;
 	}
-	dup2(fd, STDIN_FILENO);
-	close(fd);
+	cmd->fd_in = fd;
 }
 
-void	outfile(char *path)
+void	outfile(char *path, t_cmd *cmd)
 {
 	int	fd;
 
@@ -59,11 +51,10 @@ void	outfile(char *path)
 		ft_putstr_fd("Open error\n", STDERR_FILENO);
 		return ;
 	}
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
+	cmd->fd_out = fd;
 }
 
-int	tablen(char **tab)
+int	tablen(t_cmd **tab)
 {
 	int	i;
 

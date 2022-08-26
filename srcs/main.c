@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:59:55 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/23 16:29:47 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/25 14:41:29 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,38 +30,33 @@ void parser(char *input, t_env *enviro)
 
 void	chose(t_env *enviro, t_cmd *cmd)
 {
+	int	i;
+
+	i = 0;
 	if (ft_strncmp(cmd->name, "exit", 4) == 0)
-	{
-		free(cmd);
 		exitfree(enviro);
-	}
 	else if (ft_strncmp(cmd->name, "pwd", 3) == 0)
 		pwd();
-	else if (ft_strncmp(cmd, "env", 3) == 0)
+	else if (ft_strncmp(cmd->name, "env", 3) == 0)
 		envi(enviro);
-	else if (ft_strncmp(cmd>name, "export", 6) == 0)
-	{
-		cmd = cmd + 7;
+	else if (ft_strncmp(cmd->name, "export", 6) == 0)
 		export(cmd, enviro);
-	}
-	else if (ft_strncmp(cmd>name, "unset", 5) == 0)
+	else if (ft_strncmp(cmd->name, "unset", 5) == 0)
 	{
-		cmd = cmd + 6;
-		unset(cmd, enviro);
+		while (cmd->arg[i])
+		{
+			unset(cmd->arg[i], enviro);
+			i++;
+		}
 	}
-	else if (ft_strncmp(cmd>name, "cd", 2) == 0)
+	else if (ft_strncmp(cmd->name, "cd", 2) == 0)
+		cd(cmd->arg, enviro);
+	else if (ft_strncmp(cmd->name, "echo ", 5) == 0)
 	{
-		cmd = cmd + 2;
-		cd(cmd, enviro);
+		echo(cmd->arg);
 	}
-	else if (ft_strncmp(cmd>name, "echo ", 5) == 0)
+	else if (ft_strncmp(cmd->name, "./", 2) == 0)
 	{
-		cmd = cmd + 5;
-		echo(cmd, enviro, 0);
-	}
-	else if (ft_strncmp(cmd>name, "./", 2) == 0)
-	{
-		cmd = cmd + 1;
 		exed(cmd, enviro);
 	}
 	else
@@ -93,7 +88,7 @@ int	main(int ac, char **av, char **env)
 		cmd = readline("minishell% ");
 		if (cmd && ft_strlen(cmd) > 0)
 			add_history(cmd);
-		parsing(cmd, enviro);
+		parser(cmd, enviro);
 		free(cmd);
 	}
 	return (0);
