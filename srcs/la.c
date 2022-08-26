@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 12:00:09 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/26 12:19:52 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/26 13:27:01 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	dd(t_list	*list, t_env *enviro)
 			}
 			else if (((t_token *)list->content)->type == IN_HEREDOC)
 			{
-				infile(heredoc(((t_token *)(list->next->content))->value, listcmd[i]));
+				infile(heredoc(((t_token *)(list->next->content))->value), listcmd[i]);
 				list = list->next->next;
 			}
 			else if (((t_token *)list->content)->type == OUT_FILE)
@@ -85,6 +85,7 @@ void	dd(t_list	*list, t_env *enviro)
 			}
 		}
 	}
+	(void) enviro;
 }
 
 // if (tmp->type == STR && ((t_token *)(list->next->content))->type == STR)
@@ -111,9 +112,7 @@ void	outfileapp(char *path, t_cmd *cmd)
 	int		fd;
 	char	*tmp;
 	char	*tmp2;
-	int		i;
 
-	i = -1;
 	fd = open(path, O_CREAT);
 	if (fd <= 0)
 	{

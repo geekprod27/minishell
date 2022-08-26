@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 11:36:39 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/25 17:40:55 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/26 13:38:40 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,25 @@ int	tablen(t_cmd **tab)
 	while (tab[i])
 		i++;
 	return (i);
+}
+
+t_cmd	**licmdaddback(t_cmd **old)
+{
+	int		len;
+	t_cmd	**new;
+	int		i;
+
+	i = 0;
+	len = tablen(old);
+	new = malloc(sizeof(t_cmd *) * (len + 2));
+	if (!new)
+		return (NULL);
+	while (old[i])
+	{
+		new[i] = old[i];
+		i++;
+	}
+	new[i] = malloc (sizeof(t_cmd));
+	new[i + 1] = NULL;
+	return (new);
 }
