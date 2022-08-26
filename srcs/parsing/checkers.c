@@ -6,7 +6,7 @@
 /*   By: shocquen <shocquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 15:39:30 by shocquen          #+#    #+#             */
-/*   Updated: 2022/08/26 10:46:26 by shocquen         ###   ########.fr       */
+/*   Updated: 2022/08/26 13:24:02 by shocquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	quote_checker(char *str)
 {
 	struct s_quote	quote;
 
+	if (!str)
+		return (0);
 	quote.first = true;
 	quote.count = 0;
 	while (*str)
