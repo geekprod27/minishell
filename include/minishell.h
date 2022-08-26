@@ -6,10 +6,9 @@
 /*   By: shocquen <shocquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 21:00:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/26 01:49:38 by shocquen         ###   ########.fr       */
+/*   Updated: 2022/08/26 18:44:52 by shocquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -29,28 +28,80 @@
 # define MAX_TOKENS 12
 
 /* parsing */
+
+/**
+ * @brief Return -1 if the quotes scopes doesn't work else it return
+ * the number of scopes
+ * 
+ * @param str 
+ * @return int 
+ */
 int		quote_checker(char *str);
+
 /**
  * @brief generate a list of token from a string
  * 
  * @param str 
  * @return t_list* 
  */
-t_list *build_tokens(char *restrict str);
-size_t    sk_strcspn(char *str, char *span);
-size_t    sk_strspn(char *str, char *span);
+void	build_tokens(t_list **tokens, char *restrict str);
+
 /**
- * @brief The strtok() function is used to isolate sequential tokens in a null-terminated string, str.
+ * @brief Computes the string array index of the first character of s which
+ * is also in charset, else the index of the first null character.
+ * 
+ * @param str 
+ * @param span 
+ * @return size_t 
+ */
+size_t	sk_strcspn(char *str, char *span);
+
+/**
+ * @brief Ccomputes the string array index of the first character of s which
+ * is not in charset, else the index of the first null character/
+ * 
+ * @param str 
+ * @param span 
+ * @return size_t 
+ */
+size_t	sk_strspn(char *str, char *span);
+
+/**
+ * @brief The strtok() function is used to isolate sequential tokens
+ * in a null-terminated string, str.
  * 
  * @param value 
  * @param type 
  * @return t_token* 
  */
-char    *sk_strtok(char    *str, char *const sep);
+char	*sk_strtok(char *str, char *const sep);
+
+/**
+ * @brief Join s1 and s2 with the join in the middle.
+ * 
+ * @param s1 
+ * @param s2 
+ * @param join 
+ * @return char* 
+ */
+char	*sk_strjoin(char const *s1, char const *s2, char join);
+
+/**
+ * @brief strtok with blocks included
+ * 
+ * @param input 
+ * @param delimit 
+ * @param o_blks 
+ * @param c_blks 
+ * @return char* 
+ */
+char	*sk_strmbtok(char *input, char *delimit, char *o_blks, char *c_blks);
 
 # define YELLOW "\033[0;33m"
 # define RESET "\033[0m"
-typedef	enum	e_type
+# define RED "\033[0;31m"
+
+typedef enum e_type
 {
 	STR = 0,
 	PIPE = '|',
@@ -58,13 +109,13 @@ typedef	enum	e_type
 	OUT_FILE_APPEND = '>' + 1,
 	IN_FILE = '<',
 	IN_HEREDOC = '<' + 1
-} t_type;
+}	t_type;
 
-typedef	struct	s_token
+typedef struct s_token
 {
-	char	*value;
+	char		*value;
 	t_type		type;
-} t_token;
+}	t_token;
 
 /* end parsing */
 
