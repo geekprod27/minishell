@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 21:00:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/26 13:38:50 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/29 16:47:41 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ void	infile(char *path, t_cmd *cmd);
 void	outfile(char *path, t_cmd *cmd);
 void	outfileapp(char *path, t_cmd *cmd);
 t_cmd	**licmdaddback(t_cmd **old);
+void	dd(t_list	*list, t_env *enviro);
 
 struct s_env
 {

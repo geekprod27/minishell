@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 11:36:39 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/26 13:38:40 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/29 18:57:52 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ t_cmd	**licmdaddback(t_cmd **old)
 		i++;
 	}
 	new[i] = malloc (sizeof(t_cmd));
+	new[i]->name = NULL;
+	new[i]->arg = NULL;
 	new[i + 1] = NULL;
 	return (new);
 }

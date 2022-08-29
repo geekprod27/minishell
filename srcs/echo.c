@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:22:10 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/25 14:31:37 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/29 17:31:40 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,21 @@ int	echo(char	**cmd)
 	int		tiretn;
 
 	i = 0;
-	if (cmd[0][0] == '-' && cmd[0][1] == 'n')
+	if (cmd[1][0] == '-' && cmd[1][1] == 'n')
 	{
 		tiretn = 1;
-		while (cmd[0][i] == 'n' && cmd[0][i])
+		i = 1;
+		while (cmd[1][i] == 'n' && cmd[1][i])
 			i++;
-		if (cmd[0][i])
+		if (cmd[1][i])
 			tiretn = 0;
-		i = tiretn;
+		i = tiretn + 1;
 	}
 	while (cmd[i])
 	{
-		printf("%s ", cmd[i]);
+		printf("%s", cmd[i]);
+		if (cmd[i+1])
+			printf(" ");
 		i++;
 	}
 	if (tiretn)

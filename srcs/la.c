@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 12:00:09 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/26 13:27:01 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/29 19:12:32 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,15 @@ int	getnbstr(t_list	*list)
 	int	i;
 
 	i = 0;
-	while (((t_token *) list->content)->type == STR)
+	while (list)
 	{
-		i++;
-		list = list->next;
+		if (((t_token *) list->content)->type == STR)
+		{
+			i++;
+			list = list->next;
+		}
+		else
+			break;
 	}
 	return (i);
 }
@@ -35,6 +40,9 @@ void	dd(t_list	*list, t_env *enviro)
 	i = 0;
 	listcmd = malloc(sizeof(t_cmd *) * 2);
 	listcmd[i] = malloc(sizeof(t_cmd));
+	listcmd[i]->fd_out = 1;
+	listcmd[i]->fd_in = 0;
+	listcmd[i+1] = NULL;
 	while (list)
 	{
 		if (list->next)
@@ -71,21 +79,30 @@ void	dd(t_list	*list, t_env *enviro)
 				list = list->next;
 				j++;
 			}
+			listcmd[i]->arg[j] = NULL;
 		}
 		else if (((t_token *)list->content)->type == PIPE)
 		{
+			fprintf(stderr, "%d\n", i);
 			if (listcmd[i]->fd_out == 1)
 			{
 				if (pipe(pi) == -1)
 					return ;
-				listcmd = licmdaddback(listcmd);
 				listcmd[i]->fd_out = pi[0];
+				listcmd = licmdaddback(listcmd);
 				i++;
 				listcmd[i]->fd_in = pi[1];
+				listcmd[i]->fd_out = 1;
 			}
+			list = list->next;
 		}
 	}
-	(void) enviro;
+	i = 0;
+	while (listcmd[i])
+	{
+		chose(enviro, listcmd[i]);
+		i++;
+	}
 }
 
 // if (tmp->type == STR && ((t_token *)(list->next->content))->type == STR)

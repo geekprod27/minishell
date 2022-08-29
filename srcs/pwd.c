@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:27:51 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/25 14:28:31 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/29 18:55:01 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,22 +93,25 @@ int	unset(char *cmd, t_env *un)
 
 int	cd(char	**cmd, t_env	*envi)
 {
-	int (i) = -1;
-	if (!*cmd)
-		cmd[0] = getvale("HOME", envi);
-	if (cmd[1])
+	//int (i) = 0;
+	if (!cmd[1])
+		cmd[1] = getvale("HOME", envi);
+	if (cmd[2])
 	{
-		freetab(cmd);
+		//freetab(cmd);
 		printf("minishell: cd: too many arguments\n");
 		return (1);
 	}
-	if (chdir(cmd[0]))
+	if (chdir(cmd[1]))
 	{
 		printf("%s: No such file or directory\n", cmd[0]);
 		return (1);
 	}
-	while (cmd[i++])
-		free(cmd[i]);
-	free(cmd);
+	// while (cmd[i])
+	// {
+	// 	free(cmd[i]);
+	// 	i++;
+	// }
+	// free(cmd);
 	return (0);
 }
