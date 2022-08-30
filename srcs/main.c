@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:59:55 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/29 19:00:57 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/30 18:18:16 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ void	chose(t_env *enviro, t_cmd *cmd)
 	int	i;
 
 	i = 0;
+	if (cmd->fd_in != 0)
+		dup2(cmd->fd_in, STDIN_FILENO);
+	if (cmd->fd_out != 0)
+		dup2(cmd->fd_out, STDOUT_FILENO);
 	fprintf(stderr, "name =%s\n", cmd->name);
 	if (ft_strncmp(cmd->name, "exit", 4) == 0)
 		exitfree(enviro);
@@ -64,6 +68,10 @@ void	chose(t_env *enviro, t_cmd *cmd)
 	}
 	else
 		lexe(cmd, enviro);
+	if (cmd->fd_in != 0)
+		close(cmd->fd_in);
+	if (cmd->fd_out != 0)
+		close(cmd->fd_out);
 }
 
 void	ctrlc(int i)
@@ -86,13 +94,13 @@ t_list	*test(void)
 	rat = ret;
 	tok = malloc(sizeof(t_token));
 	tok->type = STR;
-	tok->value = "cd";
+	tok->value = "export";
 	ret->content = tok;
 	ret->next = malloc(sizeof(t_list));
 	ret = ret->next;
 	tok = malloc(sizeof(t_token));
 	tok->type = STR;
-	tok->value = "..";
+	tok->value = "a=coucou";
 	ret->content = tok;
 	ret->next = malloc(sizeof(t_list));
 	ret = ret->next;
@@ -104,7 +112,7 @@ t_list	*test(void)
 	ret = ret->next;
 	tok = malloc(sizeof(t_token));
 	tok->type = STR;
-	tok->value = "pwd";
+	tok->value = "env";
 	ret->content = tok;
 	ret->next = NULL;
 	return (rat);
@@ -112,7 +120,7 @@ t_list	*test(void)
 
 int	main(int ac, char **av, char **env)
 {
-	//char	*cmd;
+	char	*cmd;
 	t_env	*enviro;
 
 	(void) ac;
@@ -128,7 +136,7 @@ int	main(int ac, char **av, char **env)
 		// parser(cmd, enviro);
 		dd(test(), enviro);
 		break ;
-		//free(cmd);
+		free(cmd);
 	}
 	return (0);
 }
