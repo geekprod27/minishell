@@ -6,7 +6,7 @@
 /*   By: shocquen <shocquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 16:29:25 by shocquen          #+#    #+#             */
-/*   Updated: 2022/08/26 18:54:24 by shocquen         ###   ########.fr       */
+/*   Updated: 2022/08/29 02:24:58 by shocquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	build_tokens(t_list **tokens, char *restrict str)
 {
 	char		*value;
 
-	value = sk_strmbtok(str, " ", "\"'", "\"'");
+	value = sk_strmbtok(str, " \t", "\"'", "\"'");
 	while (value != NULL)
 	{
 		ft_lstadd_back(tokens, ft_lstnew(newtok(value, 0)));
