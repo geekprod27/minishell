@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 17:57:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/05/11 16:21:16 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/08/25 14:32:41 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	child(char *path, char **argv, char**env, char *name)
 {
 	if (execve(path, argv, env) == -1)
-		printf("%s: command not found\n", name + 1);
+		printf("%s: command not found\n", name);
 	freetab(env);
 	free(name);
 	freetab(argv);

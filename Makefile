@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: shocquen <shocquen@student.42.fr>          +#+  +:+       +#+         #
+#    By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/31 22:41:32 by nfelsemb          #+#    #+#              #
-#    Updated: 2022/08/26 00:28:40 by shocquen         ###   ########.fr        #
+#    Updated: 2022/08/29 18:46:45 by nfelsemb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,8 @@ INCLUDE = ./include/
 LIBFT	= ./libft/libft.a
 CFLAGS	+= -Wall -Werror -Wextra -g3
 
-FILES	= main.c pwd.c util.c echo.c exitfree.c norm.c autres.c
-FILES_PARS = quote_checker.c tokens_split.c sk_strtok.c
+FILES	= main.c pwd.c util.c echo.c exitfree.c norm.c autres.c pipe.c pipe2.c fi.c la.c
+FILES_PARS = quote_checker.c tokens_split.c sk_strtok.c build_tokens.c
 
 SRCS	= $(addprefix ./srcs/, $(FILES))
 OBJS	= $(addprefix ./objs/, $(FILES:.c=.o))

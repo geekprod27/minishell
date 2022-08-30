@@ -6,7 +6,7 @@
 /*   By: shocquen <shocquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 21:00:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/30 15:50:58 by shocquen         ###   ########.fr       */
+/*   Updated: 2022/08/30 16:28:24 by shocquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,90 +130,32 @@ struct s_pipe
 	t_pipe	*next;
 };
 
-/*typedef struct s_token
-{
-	char	*str;
-	size_t	len;
-	t_ttype	type;
-}				t_token;
-
-typedef struct s_lexer
-{
-	size_t	pos;
-	size_t	size;
-	size_t	capacity;
-	char	*input;
-	t_token	**tokens;
-}				t_lexer;
-
-typedef struct s_ast
-{
-	t_node			type;
-	struct s_ast	*left;
-	struct s_ast	*right;
-	char			*data;
-}				t_ast;
-
-typedef struct s_simplecmd
-{
-	size_t	ac;
-	char	**av;
-	char	*input_file;
-	char	*output_file;
-}				t_simplecmd;
-
 typedef struct s_cmd
 {
-	size_t		cap;
-	size_t		cmd_count;
-	t_simplecmd	**simple_cmd;
+	char	*name;
+	char	**arg;
+	int		fd_in;
+	int		fd_out;
 }				t_cmd;
 
-typedef struct s_ctrl
-{
-	t_lexer	*lexer;
-	t_ast	*ast;
-	t_cmd	*cmd;
-}				t_ctrl; */
-
-/*Functions for lexer*/
-
-/* void	create_lexer(t_lexer *lexer, size_t cap);
-t_lexer	*malloc_lexer(size_t cap);
-int		lexer_full(t_lexer *lexer);
-int		pass(t_lexer *lexer, t_ttype needed);
-void	add_token_to_lexer(t_lexer *lexer, const char *s, size_t len,
-			t_ttype type);
-void	add_word_to_lexer(t_lexer *lexer, char **token_s);
-void	double_lexer(t_lexer *lexer); */
-
-/*Functions for tokens*/
-
-/* t_token	create_token(const char *str, size_t len, t_ttype type);
-t_token	*malloc_token(const char *s, size_t len, t_ttype type);
-int		tokenize(t_lexer *lexer);
-t_regex	get_token(char *input);
-void	get_next_token(t_lexer *lexer);
-int		push_char(t_lexer *lexer, char **token_s); */
-
 typedef struct s_env	t_env;
-void	parsing(char *cmd, t_env *enviro);
+void	chose(t_env *enviro, t_cmd *cmd);
 void	ctrlc(int i);
 int		pwd(void);
 int		envi( t_env *enviro);
 char	*ft_strjoinchar(char const *s1, char const s2);
 t_env	*initenv(char **env);
-int		export(char *cmd, t_env *un);
+int		export(t_cmd *cmd, t_env *un);
 void	changedeb(t_env *un);
 int		unset(char *cmd, t_env *un);
-int		cd(char	*cmd, t_env	*envi);
-int		echo(char	*cmd, t_env *enviro, int tiretn);
+int		cd(char	**cmd, t_env	*envi);
+int		echo(char	**cmd);
 char	*getvale(char *name, t_env *un);
-void	lexe(char *cmd, t_env *envi);
+void	lexe(t_cmd *cmd, t_env *envi);
 void	exitfree(t_env *un);
 void	freeenv(t_env *un);
 int		checkname(char *name);
-void	exed(char *cmd, t_env *envi);
+void	exed(t_cmd *cmd, t_env *envi);
 char	**getenvchar(t_env *enviro);
 void	freetr(char	**pa, char *name, int i);
 char	*getna(char *cmd);
@@ -224,14 +166,16 @@ void	freetab(char **tab);
 void	addele(t_env *un, char **retsplit);
 int		exportun(t_env *un);
 int		exportd(char *cmd, t_env *un);
-void	piped(char **retsplit, t_env *enviro);
-void	pipe2(char **retsplit, t_env *enviro, t_pipe *pl);
-void	childpipe(int i, t_pipe *pl, char **retsplit, t_env *enviro);
-int		tablen(char **tab);
+void	piped(t_cmd **retsplit, t_env *enviro);
+void	pipe2(t_cmd **retsplit, t_env *enviro, t_pipe *pl);
+void	childpipe(int i, t_pipe *pl, t_cmd **retsplit, t_env *enviro);
+int		tablen(t_cmd **tab);
 char	*heredoc(char *deli);
-void	infile(char *path);
-void	outfile(char *path);
-void	outfileapp(char *path);
+void	infile(char *path, t_cmd *cmd);
+void	outfile(char *path, t_cmd *cmd);
+void	outfileapp(char *path, t_cmd *cmd);
+t_cmd	**licmdaddback(t_cmd **old);
+void	dd(t_list	*list, t_env *enviro);
 
 struct s_env
 {
