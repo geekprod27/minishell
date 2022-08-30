@@ -6,7 +6,7 @@
 /*   By: shocquen <shocquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 21:00:27 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/26 18:44:52 by shocquen         ###   ########.fr       */
+/*   Updated: 2022/08/30 15:50:58 by shocquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
  * @param str 
  * @return int 
  */
+/**
 int		quote_checker(char *str);
 
 /**
