@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:16:13 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/25 14:37:31 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/09/01 16:47:12 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,12 @@ void	exed(t_cmd *cmd, t_env *envi)
 {
 	int	pid;
 
-	pid = fork();
+	if (cmd->pid == -2)
+		pid = fork();
+	else
+		pid = 0;
 	if (pid == 0)
 		chldexed(cmd, envi);
-	else
+	else if (cmd->pid == -2)
 		waitpid(pid, 0, 0);
 }

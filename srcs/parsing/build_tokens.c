@@ -1,42 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokens_split.c                                     :+:      :+:    :+:   */
+/*   build_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shocquen <shocquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 16:29:25 by shocquen          #+#    #+#             */
-/*   Updated: 2022/08/26 01:49:30 by shocquen         ###   ########.fr       */
+/*   Updated: 2022/08/29 02:24:58 by shocquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list *build_tokens(char *restrict str);
-t_token *newtok(char *value, t_type type);
-
+t_token	*newtok(char *value, t_type type);
+void	restruct_quotes(t_list **tokens);
 // static inline int	is_whitesp(char c);
 // static inline int	is_spe(char *str);
 
-t_list *build_tokens(char *restrict str)
+void	build_tokens(t_list **tokens, char *restrict str)
 {
-	t_list	*tokens;
 	char		*value;
 
-	tokens = NULL;
-	value	= sk_strtok(str, " ");
+	value = sk_strmbtok(str, " \t", "\"'", "\"'");
 	while (value != NULL)
 	{
-		// printf("strtok: %s\n", value);
-		ft_lstadd_back(&tokens, ft_lstnew(newtok(value, 0)));
-		value = sk_strtok(NULL, " ");
+		ft_lstadd_back(tokens, ft_lstnew(newtok(value, 0)));
+		value = sk_strmbtok(NULL, " ", "\"'", "\"'");
 	}
 	// todo: tokenize_meta_char(&tokens) newtok on pipes, redirr..
 	// todo: expand_tokens(&tokens, env)
-	return (tokens);
 }
 
-t_token *newtok(char *value, t_type type)
+t_token	*newtok(char *value, t_type type)
 {
 	t_token	*ret;
 
@@ -47,11 +42,6 @@ t_token *newtok(char *value, t_type type)
 	ret->type = type;
 	return (ret);
 }
-
-// static inline int	is_whitesp(char c)
-// {
-// 	return (c == ' ' || c == '\t' || c == '\n');
-// }
 
 // static inline int	is_spe(char *str)
 // {

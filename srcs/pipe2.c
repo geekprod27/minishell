@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 11:36:39 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/30 18:17:04 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/09/06 14:37:34 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,6 @@ t_cmd	**licmdaddback(t_cmd **old)
 	new[i]->name = NULL;
 	new[i]->arg = NULL;
 	new[i + 1] = NULL;
+	free(old);
 	return (new);
 }

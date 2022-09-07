@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:22:10 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/29 17:31:40 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:53:30 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,12 +117,14 @@ void	lexe(t_cmd *cmd, t_env *envi)
 
 	signal(SIGINT, childctrlc);
 	signal(SIGQUIT, coredump);
-	pid = fork();
+	if (cmd->pid == -2)
+		pid = fork();
+	else
+		pid = 0;
 	if (pid == 0)
 	{
 		path = getpath(cmd->name, envi);
 		argv = cmd->arg;
-		free(argv[0]);
 		if (path)
 			argv[0] = path;
 		env = getenvchar(envi);
@@ -131,6 +133,6 @@ void	lexe(t_cmd *cmd, t_env *envi)
 		free(cmd);
 		exit(6);
 	}
-	else
+	else if (cmd->pid == -2)
 		waitpid(pid, &status, 0);
 }

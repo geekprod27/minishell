@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quote_checker.c                                    :+:      :+:    :+:   */
+/*   checkers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shocquen <shocquen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 15:39:30 by shocquen          #+#    #+#             */
-/*   Updated: 2022/05/30 10:50:17 by shocquen         ###   ########.fr       */
+/*   Updated: 2022/08/26 13:24:02 by shocquen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ struct s_quote
 	int		count;
 };
 
-/* Return -1 if the quotes scopes doesn't work else it return the number of scopes*/
-
 int	quote_checker(char *str)
 {
 	struct s_quote	quote;
 
+	if (!str)
+		return (0);
 	quote.first = true;
 	quote.count = 0;
 	while (*str)
@@ -50,3 +50,4 @@ int	quote_checker(char *str)
 		return (-1);
 	return (quote.count / 2);
 }
+

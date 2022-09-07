@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 15:44:29 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/05/12 12:14:12 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:07:08 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,20 @@ void	freeenv(t_env *un)
 		free(un->value);
 		free(un);
 		un = deux;
+	}
+}
+
+void	freeplc(t_cmd **cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i]->fd_in != 0)
+			close(cmd[i]->fd_in);
+		if (cmd[i]->fd_out != 1)
+			close(cmd[i]->fd_out);
+		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 17:24:07 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/06/21 15:50:18 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/09/06 14:41:46 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,19 @@ char	*getna(char *cmd)
 }
 
 void	freetab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
+void	freetcmd(t_cmd **tab)
 {
 	int	i;
 

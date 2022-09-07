@@ -6,7 +6,7 @@
 /*   By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 12:00:09 by nfelsemb          #+#    #+#             */
-/*   Updated: 2022/08/30 11:52:15 by nfelsemb         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:08:46 by nfelsemb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,84 +25,57 @@ int	getnbstr(t_list	*list)
 			list = list->next;
 		}
 		else
-			break;
+			break ;
 	}
 	return (i);
+}
+
+void	piped(t_cmd **listcmd, t_env *enviro)
+{
+	int	i;
+	int	k;
+
+	i = 0;
+	while (listcmd[i])
+	{
+		listcmd[i]->pid = fork();
+		if (listcmd[i]->pid == 0)
+		{
+			chose(enviro, listcmd, i);
+			k = 0;
+			while (listcmd[k])
+			{
+				freetab(listcmd[k]->arg);
+				k++;
+			}
+			freetcmd(listcmd);
+			exit(1);
+		}
+		i++;
+	}
+	i = 0;
+	while (listcmd[i])
+	{
+		waitpid(listcmd[i]->pid, 0, 0);
+		if (listcmd[i]->fd_in != 0)
+			close(listcmd[i]->fd_in);
+		if (listcmd[i]->fd_out != 1)
+			close(listcmd[i]->fd_out);
+		free(listcmd[i]);
+		i++;
+	}
+	free(listcmd);
 }
 
 void	dd(t_list	*list, t_env *enviro)
 {
 	t_cmd	**listcmd;
-	int		i;
-	int		j;
-	int		pi[2];
 
-	i = 0;
-	listcmd = malloc(sizeof(t_cmd *) * 2);
-	listcmd[i] = malloc(sizeof(t_cmd));
-	listcmd[i]->fd_out = 1;
-	listcmd[i]->fd_in = 0;
-	listcmd[i+1] = NULL;
-	while (list)
-	{
-		if (list->next)
-		{
-			if (((t_token *)list->content)->type == IN_FILE)
-			{
-				infile(((t_token *)list->next->content)->value, listcmd[i]);
-				list = list->next->next;
-			}
-			else if (((t_token *)list->content)->type == IN_HEREDOC)
-			{
-				infile(heredoc(((t_token *)(list->next->content))->value), listcmd[i]);
-				list = list->next->next;
-			}
-			else if (((t_token *)list->content)->type == OUT_FILE)
-			{
-				outfile(((t_token *)(list->next->content))->value, listcmd[i]);
-				list = list->next->next;
-			}
-			else if (((t_token *)list->content)->type == OUT_FILE_APPEND)
-			{
-				outfileapp(((t_token *)(list->next->content))->value, listcmd[i]);
-				list = list->next->next;
-			}
-		}
-		if (((t_token *)list->content)->type == STR)
-		{
-			listcmd[i]->name = ((t_token *)list->content)->value;
-			listcmd[i]->arg = malloc(sizeof(char *) * (getnbstr(list) + 1));
-			j = 0;
-			while (list && ((t_token *)list->content)->type == STR)
-			{
-				listcmd[i]->arg[j] = ((t_token *)list->content)->value;
-				list = list->next;
-				j++;
-			}
-			listcmd[i]->arg[j] = NULL;
-		}
-		else if (((t_token *)list->content)->type == PIPE)
-		{
-			fprintf(stderr, "%d\n", i);
-			if (listcmd[i]->fd_out == 1)
-			{
-				if (pipe(pi) == -1)
-					return ;
-				listcmd[i]->fd_out = pi[0];
-				listcmd = licmdaddback(listcmd);
-				i++;
-				listcmd[i]->fd_in = pi[1];
-				listcmd[i]->fd_out = 1;
-			}
-			list = list->next;
-		}
-	}
-	i = 0;
-	while (listcmd[i])
-	{
-		chose(enviro, listcmd[i]);
-		i++;
-	}
+	listcmd = initlistcmd(list);
+	if (listcmd[1])
+		piped(listcmd, enviro);
+	else
+		chose(enviro, listcmd, 0);
 }
 
 // if (tmp->type == STR && ((t_token *)(list->next->content))->type == STR)

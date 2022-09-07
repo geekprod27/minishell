@@ -6,7 +6,7 @@
 #    By: nfelsemb <nfelsemb@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/31 22:41:32 by nfelsemb          #+#    #+#              #
-#    Updated: 2022/08/30 18:16:39 by nfelsemb         ###   ########.fr        #
+#    Updated: 2022/09/06 15:25:11 by nfelsemb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,8 @@ INCLUDE = ./include/
 LIBFT	= ./libft/libft.a
 CFLAGS	+= -Wall -Werror -Wextra -g3
 
-FILES	= main.c pwd.c util.c echo.c exitfree.c norm.c autres.c fi.c la.c pipe2.c
-FILES_PARS = quote_checker.c tokens_split.c sk_strtok.c build_tokens.c
+FILES	= main.c pwd.c util.c echo.c exitfree.c norm.c autres.c fi.c la.c pipe2.c initlistcmd.c
+FILES_PARS = sk_strtok.c build_tokens.c checkers.c sk_strmbtok.c
 
 SRCS	= $(addprefix ./srcs/, $(FILES))
 OBJS	= $(addprefix ./objs/, $(FILES:.c=.o))
@@ -37,7 +37,7 @@ $(LIBFT):
 
 clean:
 	$(MAKE) -C ./libft clean
-	$(RM) $(OBJS) 
+	$(RM) $(OBJS) $(OBJS_PARS)
 
 fclean:	clean
 	$(RM) $(NAME)
